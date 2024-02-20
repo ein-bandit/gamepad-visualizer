@@ -74,22 +74,37 @@ button:focus-visible {
   }
 }
 
-.gamepad-button {
+.gamepad-element {
   display: block;
   position: relative; 
 }
-.gamepad-button foreignObject div {
-  font-size: 1.5rem;
-  font-weight: 600;
+.gamepad-element foreignObject  {
+  pointer-events: none;
+}
+.gamepad-element foreignObject > div:first-child {
   display: flex; 
   justify-content: center; 
   align-items: center; 
+  flex-direction: column;
   height: 100%;
 
   color: black;
-  transition: color 0.33s ease;
 }
 
+.gamepad-object {
+  width: 100%;
+  height: 100%;
+}
+
+.gamepad-axis foreignObject div {
+  color: grey
+}
+
+.gamepad-button foreignObject div {
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: color 0.33s ease;
+}
 .gamepad-button foreignObject div.highlight {
   color: white;
 }

@@ -33,10 +33,9 @@
 </script>
 
 <svg
-  class="gamepad-button"
+  class="gamepad-element gamepad-button"
   width={RADIUS * 2}
   height={RADIUS * 2}
-  style="position: relative; display: block;"
 >
   <g>
     <circle
@@ -47,9 +46,11 @@
       fill-opacity={$fillOpacity}
     ></circle>
   </g>
-  <foreignObject width="100%" height="100%" style="pointer-events: none;">
-    <div class={pressed ? "highlight" : ""}>
-      {name}
+  <foreignObject class="gamepad-object">
+    <div>
+      <div class={pressed ? "highlight" : ""}>
+        {name}
+      </div>
     </div>
   </foreignObject>
 </svg>

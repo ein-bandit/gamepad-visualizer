@@ -41,25 +41,65 @@
 
 <main>
   <h1>Gamepad Visualizer</h1>
-
-  <div class="card">
-    <div>
-      {#if currentGamepad}
-        <p>{currentGamepad}</p>
-      {:else}
-        <p>press a button first</p>
-      {/if}
+  <div>
+    {#if currentGamepad}
+      <p>
+        index: {currentGamepad[0]}, id: {currentGamepad[1].length
+          ? currentGamepad[1]
+          : "unknown"}
+      </p>
+    {:else}
+      <p>press a button first</p>
+    {/if}
+  </div>
+  <div class="base-container">
+    <div class="grid-container">
+      <div class="joystick">
+        <Joystick
+          name="Left Joystick"
+          value={[data?.axes[0] ?? 0, data?.axes[1] ?? 0]}
+        />
+      </div>
+      <div class="button-a">
+        <Button
+          name="B"
+          pressed={data?.buttons[2].pressed ?? false}
+          color="green"
+        />
+      </div>
+      <div class="button-b">
+        <Button
+          name="A"
+          pressed={data?.buttons[0].pressed ?? false}
+          color="blue"
+        />
+      </div>
     </div>
-    <Joystick
-      name="Left Joystick"
-      value={[data?.axes[0] ?? 0, data?.axes[1] ?? 0]}
-    />
-    <Button name="A" pressed={data?.buttons[0].pressed ?? false} color="blue" />
-    <Button
-      name="B"
-      pressed={data?.buttons[2].pressed ?? false}
-      color="green"
-    />
+
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+      .joystick {
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+      }
+      [class^="button-"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .button-a {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      .button-b {
+        grid-column: 2;
+        grid-row: 2;
+      }
+    </style>
   </div>
 </main>
 

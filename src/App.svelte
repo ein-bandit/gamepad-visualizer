@@ -75,33 +75,30 @@
         />
       </div>
     </div>
-
-    <style>
-      .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-      }
-      .joystick {
-        grid-column: 1 / 2;
-        grid-row: 1 / -1;
-      }
-      [class^="button-"] {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .button-a {
-        grid-column: 2;
-        grid-row: 1;
-      }
-      .button-b {
-        grid-column: 2;
-        grid-row: 2;
-      }
-    </style>
   </div>
 </main>
 
 <style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .joystick {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  [class^="button-"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button-a {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .button-b {
+    grid-column: 2;
+    grid-row: 2;
+  }
 </style>

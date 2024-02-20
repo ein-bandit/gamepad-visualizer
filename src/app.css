@@ -73,3 +73,23 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.gamepad-button {
+  display: block;
+  position: relative; 
+}
+.gamepad-button foreignObject div {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100%;
+
+  color: black;
+  transition: color 0.33s ease;
+}
+
+.gamepad-button foreignObject div.highlight {
+  color: white;
+}

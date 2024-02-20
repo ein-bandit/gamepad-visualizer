@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Button from "./lib/Button.svelte";
   import Joystick from "./lib/Joystick.svelte";
 
   // create a constant for input refresh rate
@@ -52,6 +53,12 @@
     <Joystick
       name="Left Joystick"
       value={[data?.axes[0] ?? 0, data?.axes[1] ?? 0]}
+    />
+    <Button name="A" pressed={data?.buttons[0].pressed ?? false} color="blue" />
+    <Button
+      name="B"
+      pressed={data?.buttons[2].pressed ?? false}
+      color="green"
     />
   </div>
 </main>

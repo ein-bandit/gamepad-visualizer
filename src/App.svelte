@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Joystick from "./lib/Joystick.svelte";
+
   // create a constant for input refresh rate
   const POLL_RATE = 33;
 
@@ -47,14 +49,10 @@
         <p>press a button first</p>
       {/if}
     </div>
-    <code
-      >{JSON.stringify({
-        id: data?.id,
-        index: data?.index,
-        axes: data?.axes.length,
-        buttons: data?.buttons.length,
-      })}</code
-    >
+    <Joystick
+      name="Left Joystick"
+      value={[data?.axes[0] ?? 0, data?.axes[1] ?? 0]}
+    />
   </div>
 </main>
 

@@ -1,13 +1,19 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
+  import { gamepadDataStore } from "../store/store.js";
+  import { calculateDelayIndex } from "../consts.js";
 
   type ButtonColor = "red" | "blue" | "yellow" | "green";
   type RGB = [number, number, number];
 
   export let name: string;
-  export let pressed: boolean;
+  export let index: number;
   export let color: ButtonColor;
+  export let delay: number | undefined = undefined;
+
+  const delayedIndex = calculateDelayIndex(delay);
 
   const RADIUS = 33;
 
@@ -25,11 +31,20 @@
     easing: cubicOut,
   });
 
-  $: if (pressed) {
-    fillOpacity.set(1);
-  } else {
-    fillOpacity.set(0.33);
-  }
+  let pressed = false;
+  const unsubscribe = gamepadDataStore.subscribe((gamepadData) => {
+    const data = gamepadData[delayedIndex];
+    if (!data) return;
+
+    pressed = data.buttons[index].pressed;
+    if (pressed) {
+      fillOpacity.set(1);
+    } else {
+      fillOpacity.set(0.33);
+    }
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
 <svg

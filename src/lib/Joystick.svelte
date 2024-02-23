@@ -1,15 +1,41 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
+  import { gamepadDataStore } from "../store/store.js";
+  import { calculateDelayIndex } from "../consts.js";
+
   export let name: string;
-  export let value: [number, number];
+  export let indices: number[];
+  export let delay: number | undefined = undefined;
 
   const RADIUS = 78.5;
 
-  $: [x, y] = value;
+  const delayedIndex = calculateDelayIndex(delay);
 
-  $: distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+  let x = 0;
+  let y = 0;
 
-  $: pointX = (x / distance) * Math.min(distance * RADIUS, RADIUS);
-  $: pointY = (y / distance) * Math.min(distance * RADIUS, RADIUS);
+  let pointX = 0;
+  let pointY = 0;
+  let distance = 0;
+
+  const unsubscribe = gamepadDataStore.subscribe((gamepadData) => {
+    const data = gamepadData[delayedIndex];
+    if (data === undefined) return;
+
+    distance = Math.sqrt(
+      Math.pow(data.axes[indices[0]], 2) + Math.pow(data.axes[indices[1]], 2)
+    );
+
+    x = data.axes[indices[0]];
+    y = data.axes[indices[1]];
+
+    pointX =
+      (data.axes[indices[0]] / distance) * Math.min(distance * RADIUS, RADIUS);
+    pointY =
+      (data.axes[indices[1]] / distance) * Math.min(distance * RADIUS, RADIUS);
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
 <svg
@@ -55,7 +81,7 @@
   <foreignObject class="gamepad-object">
     <div>
       <div>{name}</div>
-      <div>{value[0].toFixed(6)}, {value[1].toFixed(6)}</div>
+      <div>{x.toFixed(6)}, {y.toFixed(6)}</div>
     </div>
   </foreignObject>
 </svg>
